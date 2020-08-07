@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <ProjectGuid>{F0EFD08D-69E2-4309-872E-C2DE1ACAEAE8}</ProjectGuid>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Lib\SharePointAddInCore\SharePointAddInCore.csproj" />
+  </ItemGroup>
+
+</Project>
