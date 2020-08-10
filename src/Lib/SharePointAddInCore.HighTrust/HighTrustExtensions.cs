@@ -18,6 +18,7 @@ namespace SharePointAddInCore
                 services.Configure(configure);
             }
 
+            services.AddScoped<ITokenIssuer, TokenIssuer>();
             services.AddScoped<ISharePointContext, HighTrustSharePointContext>();
 
             return services;

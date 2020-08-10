@@ -65,12 +65,12 @@ namespace SharePointAddInCore.LowTrust
                 throw new ArgumentNullException(nameof(LowTrustSharePointOptions.AddInHostName));
             }
 
-            var token = await GetAppOnlyToken(sharePointSiteUri);
+            var token = await GetAcsAppOnlyToken(sharePointSiteUri);
             return new SharePointTokenResult(token.AccessToken, token.ExpiresOn);
         }
 
 
-        private async ValueTask<AcsTokenResponse> GetAppOnlyToken(Uri target)
+        private async ValueTask<AcsTokenResponse> GetAcsAppOnlyToken(Uri target)
         {
             if (target == null)
             {
@@ -131,7 +131,7 @@ namespace SharePointAddInCore.LowTrust
             var tokenResult = GetSessionValueOrDefault<SharePointTokenResult>(key);
             if (tokenResult == null || tokenResult.Expires.AddMinutes(-1) <= DateTime.UtcNow)
             {
-                var tokenResponse = await GetAppOnlyToken(target);
+                var tokenResponse = await GetAcsAppOnlyToken(target);
                 tokenResult = new SharePointTokenResult(tokenResponse.AccessToken, tokenResponse.ExpiresOn);
 
                 SetSessionValue(key, tokenResult);
