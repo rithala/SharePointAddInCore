@@ -50,6 +50,11 @@ namespace SharePointAddInCore.HighTrust
 
         private async ValueTask<SharePointTokenResult> AppSessionTokenHandler(string key, Uri target)
         {
+            if (target == null)
+            {
+                return null;
+            }
+
             var tokenResult = GetSessionValueOrDefault<SharePointTokenResult>(key);
             if (tokenResult == null || tokenResult.Expires.AddMinutes(-1) <= DateTime.UtcNow)
             {
@@ -63,6 +68,11 @@ namespace SharePointAddInCore.HighTrust
 
         private async ValueTask<SharePointUserTokenResult> UserSessionTokenHandler(string key, Uri target)
         {
+            if (target == null)
+            {
+                return null;
+            }
+
             var tokenResult = GetSessionValueOrDefault<SharePointUserTokenResult>(key);
             if (tokenResult == null || tokenResult.Expires.AddMinutes(-1) <= DateTime.UtcNow)
             {

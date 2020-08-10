@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!--Published:70EDFC97-B41D-43C5-B751-7C00AD999804-->
+<!--Created:cb85b80c-f585-40ff-8bfc-12ff4d0e34a9-->
+<App xmlns="http://schemas.microsoft.com/sharepoint/2012/app/manifest" Name="SharePointAddInCoreExampleHighTrust" ProductID="{358f0aa3-b242-4f91-b9eb-d1a68c2812ab}" Version="1.0.0.4" SharePointMinVersion="15.0.0.0">
+  <Properties>
+    <Title>SharePointAddInCore.Example.HighTrust</Title>
+    <StartPage>http://localhost:44324?{StandardTokens}</StartPage>
+  </Properties>
+  <AppPrincipal>
+    <RemoteWebApplication ClientId="c45fde73-4523-4bb4-b749-08cb463fd289" />
+  </AppPrincipal>
+  <AppPermissionRequests AllowAppOnlyPolicy="true">
+    <AppPermissionRequest Scope="http://sharepoint/content/sitecollection/web" Right="FullControl" />
+  </AppPermissionRequests>
+</App>
