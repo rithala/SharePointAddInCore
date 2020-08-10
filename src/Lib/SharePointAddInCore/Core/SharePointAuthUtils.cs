@@ -1,8 +1,8 @@
 ﻿using System.Globalization;
 
-namespace SharePointAddInCore.LowTrust
+namespace SharePointAddInCore.Core
 {
-    internal static class Utils
+    internal static class SharePointAuthUtils
     {
         public static string GetFormattedPrincipal(string principalName, string hostName, string realm)
         {

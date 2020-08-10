@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 
+using SharePointAddInCore.Core;
 using SharePointAddInCore.Core.Extensions;
 using SharePointAddInCore.Core.SharePointClient;
 using SharePointAddInCore.Core.SharePointContext;
@@ -78,12 +79,12 @@ namespace SharePointAddInCore.LowTrust
 
             var realm = await GetRealm(target);
 
-            var resource = Utils.GetFormattedPrincipal(
+            var resource = SharePointAuthUtils.GetFormattedPrincipal(
                     SharePointContextConstants.SharePointPrincipal,
                     target.Authority,
                     realm);
 
-            var clientId = Utils.GetFormattedPrincipal(
+            var clientId = SharePointAuthUtils.GetFormattedPrincipal(
                 _options.ClientId,
                 _options.AddInHostName ?? _httpContextAccessor.HttpContext.Request.GetUri().Authority,
                 realm);
@@ -105,12 +106,12 @@ namespace SharePointAddInCore.LowTrust
 
             var realm = await GetRealm(target);
 
-            var resource = Utils.GetFormattedPrincipal(
+            var resource = SharePointAuthUtils.GetFormattedPrincipal(
                     SharePointContextConstants.SharePointPrincipal,
                     target.Authority,
                     realm);
 
-            var clientId = Utils.GetFormattedPrincipal(
+            var clientId = SharePointAuthUtils.GetFormattedPrincipal(
                 _options.ClientId,
                 _options.AddInHostName ?? _httpContextAccessor.HttpContext.Request.GetUri().Authority,
                 realm);
@@ -189,7 +190,7 @@ namespace SharePointAddInCore.LowTrust
             var audience = spToken.Audiences.First();
             var realm = _options.Realm ?? spToken.Realm;
 
-            var principal = Utils.GetFormattedPrincipal(
+            var principal = SharePointAuthUtils.GetFormattedPrincipal(
                 _options.ClientId,
                 _httpContextAccessor.HttpContext.Request.GetUri().Authority,
                 realm);

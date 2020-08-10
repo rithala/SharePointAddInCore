@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Options;
 
-using SharePointAddInCore.Core;
 using SharePointAddInCore.Core.SharePointContext;
 
 using System;
@@ -17,7 +16,7 @@ namespace SharePointAddInCore.HighTrust
         public HighTrustSharePointContext(
             IHttpContextAccessor httpContextAccessor,
             HttpClient httpClient,
-            IOptions<HighTrustSharePointOptions> options) : base(httpContextAccessor, httpClient)
+            IOptions<HighTrustSharePointOptions> options) : base(httpContextAccessor)
         {
             _options = options.Value ?? throw new ArgumentNullException(nameof(HighTrustSharePointOptions));
         }

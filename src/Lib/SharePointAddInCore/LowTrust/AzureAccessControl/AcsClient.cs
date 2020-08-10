@@ -1,5 +1,7 @@
 ﻿using Newtonsoft.Json;
 
+using SharePointAddInCore.Core;
+
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -107,6 +109,6 @@ namespace SharePointAddInCore.LowTrust.AzureAccessControl
             => Path.Combine(GetAcsGlobalEndpoint(), _acsMetadataEndPointRelativeUrl);
 
         private static string GetAcsPrincipalName(string realm)
-            => Utils.GetFormattedPrincipal(_acsPrincipalName, new Uri(GetAcsGlobalEndpoint()).Host, realm);
+            => SharePointAuthUtils.GetFormattedPrincipal(_acsPrincipalName, new Uri(GetAcsGlobalEndpoint()).Host, realm);
     }
 }
