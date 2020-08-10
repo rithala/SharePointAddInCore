@@ -10,6 +10,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
+using SharePointAddInCore.Core.Authentication;
+
 namespace SharePointAddInCore.Example.Web
 {
     public class Startup
@@ -27,12 +29,11 @@ namespace SharePointAddInCore.Example.Web
             services.AddControllersWithViews();
 
             services.AddHttpContextAccessor();
-            services.AddDistributedMemoryCache();
+            //services.AddDistributedMemoryCache();
             services.AddSession();
-            services.AddLowTrustAddIn(configure =>
-            {
-                Configuration.GetSection("SharePoint").Bind(configure);
-            });
+            services.AddLowTrustAddIn(configure => Configuration.GetSection("SharePoint").Bind(configure));
+
+            services.AddSharePointAuthentication();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -55,6 +56,7 @@ namespace SharePointAddInCore.Example.Web
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

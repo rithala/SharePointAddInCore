@@ -9,5 +9,6 @@ namespace SharePointAddInCore.Core.SharePointContext
         ValueTask<SharePointUserTokenResult> GetUserAccessTokenForSPAppWeb();
         ValueTask<SharePointTokenResult> GetAppOnlyAccessTokenForSPHost();
         ValueTask<SharePointTokenResult> GetAppOnlyAccessTokenForSPAppWeb();
+        ValueTask<SharePointTokenResult> GetAppOnlyAccessToken(Uri sharePointSiteUri);
     }
 }

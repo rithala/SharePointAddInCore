@@ -52,6 +52,17 @@ namespace SharePointAddInCore.LowTrust
         public ValueTask<SharePointUserTokenResult> GetUserAccessTokenForSPHost()
             => UserSessionTokenHandler(_tokenUserHostKey, SPHostUrl);
 
+        public async ValueTask<SharePointTokenResult> GetAppOnlyAccessToken(Uri sharePointSiteUri)
+        {
+            if (_options.AddInHostName == null)
+            {
+                throw new ArgumentNullException(nameof(LowTrustSharePointOptions.AddInHostName));
+            }
+
+            var token = await GetAppOnlyToken(sharePointSiteUri);
+            return new SharePointTokenResult(token.AccessToken, token.ExpiresOn);
+        }
+
 
         private async ValueTask<AcsTokenResponse> GetAppOnlyToken(Uri target)
         {
@@ -69,7 +80,7 @@ namespace SharePointAddInCore.LowTrust
 
             var clientId = Utils.GetFormattedPrincipal(
                 _options.ClientId,
-                _options.HostedAppHostName ?? GetRequestUri().Authority,
+                _options.AddInHostName ?? GetRequestUri().Authority,
                 realm);
 
             return await _acsClient
@@ -96,7 +107,7 @@ namespace SharePointAddInCore.LowTrust
 
             var clientId = Utils.GetFormattedPrincipal(
                 _options.ClientId,
-                _options.HostedAppHostName ?? GetRequestUri().Authority,
+                _options.AddInHostName ?? GetRequestUri().Authority,
                 realm);
 
             var sharePointContext = GetSharePointContext();
@@ -132,6 +143,7 @@ namespace SharePointAddInCore.LowTrust
 
                 if (tokenResponse == null)
                 {
+                    RemoveSessionValue(key);
                     return null;
                 }
 

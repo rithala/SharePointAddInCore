@@ -1,6 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 
-using SharePointAddInCore.Core.Extensions;
 using SharePointAddInCore.Core.SharePointContext;
 using SharePointAddInCore.LowTrust;
 using SharePointAddInCore.LowTrust.AzureAccessControl;
