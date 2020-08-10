@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 
-namespace SharePointAddInCore.LowTrust
+namespace SharePointAddInCore.LowTrust.AzureAccessControl
 {
     internal static class JsonMetadataDocumentExtensions
     {

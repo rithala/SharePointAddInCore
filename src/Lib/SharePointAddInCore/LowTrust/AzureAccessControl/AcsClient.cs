@@ -72,8 +72,9 @@ namespace SharePointAddInCore.LowTrust.AzureAccessControl
             var response = await PostData(metadata.GetStsUrl(), requestData);
 
             response.EnsureSuccessStatusCode();
+            var jsonResponse = await response.Content.ReadAsStringAsync();
 
-            return JsonConvert.DeserializeObject<AcsTokenResponse>(await response.Content.ReadAsStringAsync());
+            return JsonConvert.DeserializeObject<AcsTokenResponse>(jsonResponse);
         }
 
         private async Task<JsonMetadataDocument> GetMetadataDocument(string realm)

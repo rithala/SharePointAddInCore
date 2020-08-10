@@ -3,6 +3,7 @@
 using SharePointAddInCore.Core.Extensions;
 using SharePointAddInCore.Core.SharePointContext;
 using SharePointAddInCore.LowTrust;
+using SharePointAddInCore.LowTrust.AzureAccessControl;
 
 using System;
 
@@ -16,7 +17,7 @@ namespace SharePointAddInCore
         /// <param name="services">The <see cref="IServiceCollection"/> to add the services to.</param>
         /// <param name="configure">The action used to configure the options.</param>
         /// <returns>The <see cref="IServiceCollection"/> so that additional calls can be chained.</returns>
-        public static IServiceCollection AddLowTrustAddIn(this IServiceCollection services, Action<LowTrustSharePointOptions> configure = null)
+        public static IServiceCollection AddLowTrustAddIn(this IServiceCollection services, Action<LowTrustSharePointOptions> configure)
         {
             services.AddCoreServices();
 
@@ -25,7 +26,8 @@ namespace SharePointAddInCore
                 services.Configure(configure);
             }
 
-            services.AddScoped<ISharePointContext, LowTrustSharePointContext>();
+            services.AddHttpClient<IAcsClient, AcsClient>();
+            services.AddHttpClient<ISharePointContext, LowTrustSharePointContext>();
 
             return services;
         }

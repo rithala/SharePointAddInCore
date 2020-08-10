@@ -40,20 +40,26 @@ namespace SharePointAddInCore.LowTrust
             _tokenHandler = new JwtSecurityTokenHandler();
         }
 
-        public ValueTask<string> GetAppOnlyAccessTokenForSPAppWeb()
-            => SessionTokenHandler(_tokenAppWebKey, () => GetAppOnlyToken(SPAppWebUrl));
+        public ValueTask<SharePointTokenResult> GetAppOnlyAccessTokenForSPAppWeb()
+            => AppSessionTokenHandler(_tokenAppWebKey, SPAppWebUrl);
 
-        public ValueTask<string> GetAppOnlyAccessTokenForSPHost()
-            => SessionTokenHandler(_tokenAppHostKey, () => GetAppOnlyToken(SPHostUrl));
+        public ValueTask<SharePointTokenResult> GetAppOnlyAccessTokenForSPHost()
+            => AppSessionTokenHandler(_tokenAppHostKey, SPHostUrl);
 
-        public ValueTask<string> GetUserAccessTokenForSPAppWeb()
-            => SessionTokenHandler(_tokenUserWebKey, () => GetUserAccessToken(SPAppWebUrl));
+        public ValueTask<SharePointUserTokenResult> GetUserAccessTokenForSPAppWeb()
+            => UserSessionTokenHandler(_tokenUserWebKey, SPAppWebUrl);
 
-        public ValueTask<string> GetUserAccessTokenForSPHost()
-            => SessionTokenHandler(_tokenUserHostKey, () => GetUserAccessToken(SPHostUrl));
+        public ValueTask<SharePointUserTokenResult> GetUserAccessTokenForSPHost()
+            => UserSessionTokenHandler(_tokenUserHostKey, SPHostUrl);
 
-        public async ValueTask<AcsTokenResponse> GetAppOnlyToken(Uri target)
+
+        private async ValueTask<AcsTokenResponse> GetAppOnlyToken(Uri target)
         {
+            if (target == null)
+            {
+                return null;
+            }
+
             var realm = await GetRealm(target);
 
             var resource = Utils.GetFormattedPrincipal(
@@ -76,6 +82,11 @@ namespace SharePointAddInCore.LowTrust
 
         private async ValueTask<AcsTokenResponse> GetUserAccessToken(Uri target)
         {
+            if (target == null)
+            {
+                return null;
+            }
+
             var realm = await GetRealm(target);
 
             var resource = Utils.GetFormattedPrincipal(
@@ -98,16 +109,40 @@ namespace SharePointAddInCore.LowTrust
                 realm);
         }
 
-        private async ValueTask<string> SessionTokenHandler(string key, Func<ValueTask<AcsTokenResponse>> getTokenFunc)
+        private async ValueTask<SharePointTokenResult> AppSessionTokenHandler(string key, Uri target)
         {
-            var session = GetSessionValueOrDefault<AcsTokenResponse>(key);
-            if (session == null || session.ExpiresOn > DateTime.UtcNow.AddMinutes(-1))
+            var tokenResult = GetSessionValueOrDefault<SharePointTokenResult>(key);
+            if (tokenResult == null || tokenResult.Expires.AddMinutes(-1) <= DateTime.UtcNow)
             {
-                session = await getTokenFunc.Invoke();
-                SetSessionValue(key, session);
+                var tokenResponse = await GetAppOnlyToken(target);
+                tokenResult = new SharePointTokenResult(tokenResponse.AccessToken, tokenResponse.ExpiresOn);
+
+                SetSessionValue(key, tokenResult);
             }
 
-            return session.AccessToken;
+            return tokenResult;
+        }
+
+        private async ValueTask<SharePointUserTokenResult> UserSessionTokenHandler(string key, Uri target)
+        {
+            var tokenResult = GetSessionValueOrDefault<SharePointUserTokenResult>(key);
+            if (tokenResult == null || tokenResult.Expires.AddMinutes(-1) <= DateTime.UtcNow)
+            {
+                var tokenResponse = await GetUserAccessToken(target);
+
+                if (tokenResponse == null)
+                {
+                    return null;
+                }
+
+                var user = await GetSharePointContextUser(target, tokenResponse.AccessToken);
+
+                tokenResult = new SharePointUserTokenResult(tokenResponse.AccessToken, tokenResponse.ExpiresOn, user);
+
+                SetSessionValue(key, tokenResult);
+            }
+
+            return tokenResult;
         }
 
         private async Task<string> GetRealm(Uri target)
@@ -194,14 +229,16 @@ namespace SharePointAddInCore.LowTrust
 
         private Uri GetRequestUri()
         {
-            var builder = new UriBuilder();
-
             var request = _httpContextAccessor.HttpContext.Request;
-            builder.Scheme = request.Scheme;
-            builder.Host = request.Host.Value;
-            builder.Path = request.Path;
-            builder.Query = request.QueryString.ToUriComponent();
-            return builder.Uri;
+            var uriBuilder = new UriBuilder
+            {
+                Scheme = request.Scheme,
+                Host = request.Host.Host,
+                Port = request.Host.Port.GetValueOrDefault(request.Scheme == "https" ? 443 : 80),
+                Path = request.Path.ToString(),
+                Query = request.QueryString.ToString()
+            };
+            return uriBuilder.Uri;
         }
     }
 }

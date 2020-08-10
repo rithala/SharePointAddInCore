@@ -2,7 +2,7 @@
 
 using System.Collections.Generic;
 
-namespace SharePointAddInCore.LowTrust
+namespace SharePointAddInCore.LowTrust.AzureAccessControl
 {
     internal class JsonMetadataDocument
     {

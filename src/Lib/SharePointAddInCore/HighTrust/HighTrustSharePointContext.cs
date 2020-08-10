@@ -22,22 +22,22 @@ namespace SharePointAddInCore.HighTrust
             _options = options.Value ?? throw new ArgumentNullException(nameof(HighTrustSharePointOptions));
         }
 
-        public ValueTask<string> GetAppOnlyAccessTokenForSPAppWeb()
+        public ValueTask<SharePointTokenResult> GetAppOnlyAccessTokenForSPAppWeb()
         {
             throw new NotImplementedException();
         }
 
-        public ValueTask<string> GetAppOnlyAccessTokenForSPHost()
+        public ValueTask<SharePointTokenResult> GetAppOnlyAccessTokenForSPHost()
         {
             throw new NotImplementedException();
         }
 
-        public ValueTask<string> GetUserAccessTokenForSPAppWeb()
+        public ValueTask<SharePointUserTokenResult> GetUserAccessTokenForSPAppWeb()
         {
             throw new NotImplementedException();
         }
 
-        public ValueTask<string> GetUserAccessTokenForSPHost()
+        public ValueTask<SharePointUserTokenResult> GetUserAccessTokenForSPHost()
         {
             throw new NotImplementedException();
         }

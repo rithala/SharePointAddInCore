@@ -7,29 +7,60 @@ namespace SharePointAddInCore.LowTrust.AzureAccessControl
 {
     internal class AcsTokenResponse
     {
+        [JsonProperty("access_token")]
         public string AccessToken { get; set; }
+
+        [JsonProperty("token_type")]
         public string TokenType { get; set; }
-        public long ExpiresIn { get; set; }
-        [JsonConverter(typeof(MicrosecondEpochConverter))]
+
+        [JsonProperty("expires_in")]
+        [JsonConverter(typeof(LongTimeSpanConverter))]
+        public TimeSpan ExpiresIn { get; set; }
+
+        [JsonProperty("expires_on")]
+        [JsonConverter(typeof(SecondsEpochConverter))]
         public DateTime ExpiresOn { get; set; }
-        [JsonConverter(typeof(MicrosecondEpochConverter))]
+
+        [JsonProperty("not_before")]
+        [JsonConverter(typeof(SecondsEpochConverter))]
         public DateTime NotBefore { get; set; }
-        public long ExtendedExpiresIn { get; set; }
+
+        [JsonProperty("resource")]
+        public string Resource { get; set; }
     }
 
-    internal class MicrosecondEpochConverter : DateTimeConverterBase
+    internal class LongTimeSpanConverter : JsonConverter
     {
-        private static readonly DateTime _epoch = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
-
-        public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
+        public override bool CanConvert(Type objectType)
         {
-            writer.WriteRawValue(((DateTime)value - _epoch).TotalMilliseconds + "000");
+            return objectType == typeof(string);
         }
 
         public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
         {
             if (reader.Value == null) { return null; }
-            return _epoch.AddMilliseconds((long)reader.Value / 1000d);
+            return TimeSpan.FromSeconds(long.Parse(reader.Value.ToString()));
+        }
+
+        public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
+        {
+            writer.WriteRawValue(((TimeSpan)value).TotalSeconds.ToString());
+        }
+    }
+
+    internal class SecondsEpochConverter : DateTimeConverterBase
+    {
+        private static readonly DateTime _epoch = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
+
+        public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
+        {
+            writer.WriteRawValue(((DateTime)value - _epoch).TotalSeconds.ToString());
+        }
+
+        public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
+        {
+            if (reader.Value == null) { return null; }
+            return _epoch.AddSeconds(long.Parse(reader.Value.ToString()));
         }
     }
 }

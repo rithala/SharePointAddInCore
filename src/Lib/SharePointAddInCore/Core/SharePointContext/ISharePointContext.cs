@@ -5,9 +5,9 @@ namespace SharePointAddInCore.Core.SharePointContext
 {
     public interface ISharePointContext : ISharePointContextProps
     {
-        ValueTask<string> GetUserAccessTokenForSPHost();
-        ValueTask<string> GetUserAccessTokenForSPAppWeb();
-        ValueTask<string> GetAppOnlyAccessTokenForSPHost();
-        ValueTask<string> GetAppOnlyAccessTokenForSPAppWeb();
+        ValueTask<SharePointUserTokenResult> GetUserAccessTokenForSPHost();
+        ValueTask<SharePointUserTokenResult> GetUserAccessTokenForSPAppWeb();
+        ValueTask<SharePointTokenResult> GetAppOnlyAccessTokenForSPHost();
+        ValueTask<SharePointTokenResult> GetAppOnlyAccessTokenForSPAppWeb();
     }
 }

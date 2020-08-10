@@ -8,7 +8,6 @@
         public const string SPLanguageKey = "SPLanguage";
         public const string SPClientTagKey = "SPClientTag";
         public const string SPProductNumberKey = "SPProductNumber";
-        public const string SPContextKey = "SPContext";
         public const string SPCacheKeyKey = "SPCacheKey";
 
         // Consts

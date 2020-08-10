@@ -41,10 +41,8 @@ namespace SharePointAddInCore.Core.SharePointContext
 
         protected async ValueTask<string> GetRealmFromTargetUrl(Uri url)
         {
-            using (var request = new HttpRequestMessage())
+            using (var request = new HttpRequestMessage(HttpMethod.Get, new Uri(url, "_vti_bin/client.svc")))
             {
-                request.RequestUri = new Uri(url, "/_vti_bin/client.svc");
-                request.Method = HttpMethod.Get;
                 request.Headers.Add("Authorization", "Bearer ");
 
                 var response = await _httpClient.SendAsync(request);
@@ -79,6 +77,21 @@ namespace SharePointAddInCore.Core.SharePointContext
                 }
 
                 return null;
+            }
+        }
+
+        protected async Task<SharePointContextUser> GetSharePointContextUser(Uri target, string accessToken)
+        {
+            using (var request = new HttpRequestMessage(HttpMethod.Get, new Uri(target, "_api/web/currentUser")))
+            {
+                request.Headers.Add("Authorization", "Bearer " + accessToken);
+                request.Headers.Add("Accept", "application/json");
+
+                var response = await _httpClient.SendAsync(request);
+                response.EnsureSuccessStatusCode();
+
+                var jsonResponse = await response.Content.ReadAsStringAsync();
+                return JsonConvert.DeserializeObject<SharePointContextUser>(jsonResponse);
             }
         }
 
@@ -149,19 +162,43 @@ namespace SharePointAddInCore.Core.SharePointContext
             {
                 SPProductNumber = param;
             }
+
+            SetSessionValue(
+                _cacheKey,
+                new SharePointContextProps(
+                    SPHostUrl,
+                    SPAppWebUrl,
+                    SPLanguage,
+                    SPClientTag,
+                    SPProductNumber));
         }
 
         private class SharePointContextProps : ISharePointContextProps
         {
-            public Uri SPHostUrl { get; set; }
+            public Uri SPHostUrl { get; }
 
-            public Uri SPAppWebUrl { get; set; }
+            public Uri SPAppWebUrl { get; }
 
-            public string SPLanguage { get; set; }
+            public string SPLanguage { get; }
 
-            public string SPClientTag { get; set; }
+            public string SPClientTag { get; }
 
-            public string SPProductNumber { get; set; }
+            public string SPProductNumber { get; }
+
+            [JsonConstructor]
+            public SharePointContextProps(
+                Uri sPHostUrl,
+                Uri sPAppWebUrl,
+                string sPLanguage,
+                string sPClientTag,
+                string sPProductNumber)
+            {
+                SPHostUrl = sPHostUrl;
+                SPAppWebUrl = sPAppWebUrl;
+                SPLanguage = sPLanguage;
+                SPClientTag = sPClientTag;
+                SPProductNumber = sPProductNumber;
+            }
         }
     }
 

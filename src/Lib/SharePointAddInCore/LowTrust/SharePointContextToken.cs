@@ -13,7 +13,8 @@ namespace SharePointAddInCore.LowTrust
     internal class SharePointContextToken : JwtSecurityToken
     {
         [JsonConstructor]
-        private SharePointContextToken()
+        private SharePointContextToken(IEnumerable<TokenClaim> claims)
+            : base(claims: claims.Select(x => new System.Security.Claims.Claim(x.Type, x.Value)))
         {
         }
 
@@ -60,5 +61,11 @@ namespace SharePointAddInCore.LowTrust
             : null;
 
         private string GetClaimValue(string claimType) => Claims.FirstOrDefault(x => x.Type == claimType)?.Value;
+
+        private class TokenClaim
+        {
+            public string Type { get; set; }
+            public string Value { get; set; }
+        }
     }
 }
