@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 
 using SharePointAddInCore.Core.Authentication;
+using SharePointAddInCore.Core.SharePointClient;
 
 using System;
 
@@ -10,7 +11,8 @@ namespace SharePointAddInCore
     {
         internal static IServiceCollection AddCoreServices(this IServiceCollection services)
         {
-            
+            services.AddHttpClient<ISharePointClient, RestSharePointClient>();
+
             return services;
         }
 

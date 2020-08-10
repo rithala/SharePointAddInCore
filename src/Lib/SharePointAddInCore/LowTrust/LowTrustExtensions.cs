@@ -26,7 +26,7 @@ namespace SharePointAddInCore
             }
 
             services.AddHttpClient<IAcsClient, AcsClient>();
-            services.AddHttpClient<ISharePointContext, LowTrustSharePointContext>();
+            services.AddScoped<ISharePointContext, LowTrustSharePointContext>();
 
             return services;
         }

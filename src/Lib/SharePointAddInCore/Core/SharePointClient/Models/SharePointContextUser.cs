@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace SharePointAddInCore.Core.SharePointContext
+namespace SharePointAddInCore.Core.SharePointClient.Models
 {
     public class SharePointContextUser
     {

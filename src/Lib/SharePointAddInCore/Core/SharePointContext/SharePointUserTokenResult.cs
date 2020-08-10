@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 
 using SharePointAddInCore.Core.Authentication;
+using SharePointAddInCore.Core.SharePointClient.Models;
 
 using System;
 using System.Collections.Generic;

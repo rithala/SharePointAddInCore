@@ -2,6 +2,8 @@
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 
+using SharePointAddInCore.Core.Extensions;
+using SharePointAddInCore.Core.SharePointClient;
 using SharePointAddInCore.Core.SharePointContext;
 using SharePointAddInCore.LowTrust.AzureAccessControl;
 
@@ -9,7 +11,6 @@ using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
-using System.Net.Http;
 using System.Threading.Tasks;
 
 namespace SharePointAddInCore.LowTrust
@@ -26,15 +27,19 @@ namespace SharePointAddInCore.LowTrust
 
         private readonly LowTrustSharePointOptions _options;
         private readonly JwtSecurityTokenHandler _tokenHandler;
+        
+        private readonly ISharePointClient _sharePointClient;
         private readonly IAcsClient _acsClient;
 
         public LowTrustSharePointContext(
             IHttpContextAccessor httpContextAccessor,
-            HttpClient httpClient,
+            ISharePointClient sharePointClient,
             IAcsClient acsClient,
-            IOptions<LowTrustSharePointOptions> options) : base(httpContextAccessor, httpClient)
+            IOptions<LowTrustSharePointOptions> options) : base(httpContextAccessor)
         {
             _options = options.Value ?? throw new ArgumentNullException(nameof(LowTrustSharePointOptions));
+            
+            _sharePointClient = sharePointClient;
             _acsClient = acsClient;
 
             _tokenHandler = new JwtSecurityTokenHandler();
@@ -80,7 +85,7 @@ namespace SharePointAddInCore.LowTrust
 
             var clientId = Utils.GetFormattedPrincipal(
                 _options.ClientId,
-                _options.AddInHostName ?? GetRequestUri().Authority,
+                _options.AddInHostName ?? _httpContextAccessor.HttpContext.Request.GetUri().Authority,
                 realm);
 
             return await _acsClient
@@ -107,7 +112,7 @@ namespace SharePointAddInCore.LowTrust
 
             var clientId = Utils.GetFormattedPrincipal(
                 _options.ClientId,
-                _options.AddInHostName ?? GetRequestUri().Authority,
+                _options.AddInHostName ?? _httpContextAccessor.HttpContext.Request.GetUri().Authority,
                 realm);
 
             var sharePointContext = GetSharePointContext();
@@ -147,7 +152,7 @@ namespace SharePointAddInCore.LowTrust
                     return null;
                 }
 
-                var user = await GetSharePointContextUser(target, tokenResponse.AccessToken);
+                var user = await _sharePointClient.GetSharePointContextUser(target, tokenResponse.AccessToken);
 
                 tokenResult = new SharePointUserTokenResult(tokenResponse.AccessToken, tokenResponse.ExpiresOn, user);
 
@@ -158,7 +163,7 @@ namespace SharePointAddInCore.LowTrust
         }
 
         private async Task<string> GetRealm(Uri target)
-         => await GetRealmFromTargetUrl(target) ?? _options.Realm;
+         => await _sharePointClient.GetAuthenticationRealm(target) ?? _options.Realm;
 
         private SharePointContextToken GetSharePointContext()
         {
@@ -184,7 +189,10 @@ namespace SharePointAddInCore.LowTrust
             var audience = spToken.Audiences.First();
             var realm = _options.Realm ?? spToken.Realm;
 
-            var principal = Utils.GetFormattedPrincipal(_options.ClientId, GetRequestUri().Authority, realm);
+            var principal = Utils.GetFormattedPrincipal(
+                _options.ClientId,
+                _httpContextAccessor.HttpContext.Request.GetUri().Authority,
+                realm);
 
             if (!audience.Equals(principal, StringComparison.OrdinalIgnoreCase))
             {
@@ -237,20 +245,6 @@ namespace SharePointAddInCore.LowTrust
             }
 
             return null;
-        }
-
-        private Uri GetRequestUri()
-        {
-            var request = _httpContextAccessor.HttpContext.Request;
-            var uriBuilder = new UriBuilder
-            {
-                Scheme = request.Scheme,
-                Host = request.Host.Host,
-                Port = request.Host.Port.GetValueOrDefault(request.Scheme == "https" ? 443 : 80),
-                Path = request.Path.ToString(),
-                Query = request.QueryString.ToString()
-            };
-            return uriBuilder.Uri;
         }
     }
 }
