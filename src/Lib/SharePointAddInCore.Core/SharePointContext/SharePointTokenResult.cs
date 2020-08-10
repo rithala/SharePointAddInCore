@@ -10,7 +10,7 @@ namespace SharePointAddInCore.Core.SharePointContext
         public DateTime Expires { get; }
 
         [JsonConstructor]
-        internal SharePointTokenResult(string accessToken, DateTime expires)
+        public SharePointTokenResult(string accessToken, DateTime expires)
         {
             AccessToken = accessToken;
             Expires = expires;

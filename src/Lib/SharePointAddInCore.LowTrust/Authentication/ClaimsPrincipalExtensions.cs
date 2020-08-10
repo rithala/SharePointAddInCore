@@ -1,6 +1,6 @@
 ﻿using System.Security.Claims;
 
-namespace SharePointAddInCore.Core.Authentication
+namespace SharePointAddInCore.LowTrust.Authentication
 {
     public static class ClaimsPrincipalExtensions
     {

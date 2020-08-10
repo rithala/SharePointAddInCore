@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-using SharePointAddInCore.Core.Authentication;
 using SharePointAddInCore.Core.SharePointContext;
+using SharePointAddInCore.LowTrust.Authentication;
 
 using System.Threading.Tasks;
 

@@ -9,7 +9,7 @@ using System.Text;
 
 namespace SharePointAddInCore.Core.SharePointContext
 {
-    internal abstract class SharePointContextBase : ISharePointContextProps
+    public abstract class SharePointContextBase : ISharePointContextProps
     {
         private const string _cacheKey = "SPContextProps";
 

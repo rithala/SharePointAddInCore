@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authentication;
 
-namespace SharePointAddInCore.Core.Authentication
+namespace SharePointAddInCore.LowTrust.Authentication
 {
     public class SharePointAuthenticationOptions : AuthenticationSchemeOptions
     {

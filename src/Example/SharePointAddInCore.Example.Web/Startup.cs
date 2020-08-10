@@ -1,16 +1,9 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-
-using SharePointAddInCore.Core.Authentication;
 
 namespace SharePointAddInCore.Example.Web
 {
@@ -29,8 +22,8 @@ namespace SharePointAddInCore.Example.Web
             services.AddControllersWithViews();
 
             services.AddHttpContextAccessor();
-            //services.AddDistributedMemoryCache();
             services.AddSession();
+
             services.AddLowTrustAddIn(configure => Configuration.GetSection("SharePoint").Bind(configure));
 
             services.AddSharePointAuthentication();

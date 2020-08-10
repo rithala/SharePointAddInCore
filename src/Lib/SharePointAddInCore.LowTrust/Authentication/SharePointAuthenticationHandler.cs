@@ -7,7 +7,7 @@ using SharePointAddInCore.Core.SharePointContext;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
 
-namespace SharePointAddInCore.Core.Authentication
+namespace SharePointAddInCore.LowTrust.Authentication
 {
     public class SharePointAuthenticationHandler : AuthenticationHandler<SharePointAuthenticationOptions>
     {

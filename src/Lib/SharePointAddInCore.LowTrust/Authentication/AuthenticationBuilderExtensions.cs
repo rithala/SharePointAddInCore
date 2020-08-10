@@ -3,7 +3,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 using System;
 
-namespace SharePointAddInCore.Core.Authentication
+namespace SharePointAddInCore.LowTrust.Authentication
 {
     public static class AuthenticationBuilderExtensions
     {

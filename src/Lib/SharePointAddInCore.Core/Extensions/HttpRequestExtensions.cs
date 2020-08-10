@@ -4,7 +4,7 @@ using System;
 
 namespace SharePointAddInCore.Core.Extensions
 {
-    internal static class HttpRequestExtensions
+    public static class HttpRequestExtensions
     {
         public static Uri GetUri(this HttpRequest request) =>
             new UriBuilder

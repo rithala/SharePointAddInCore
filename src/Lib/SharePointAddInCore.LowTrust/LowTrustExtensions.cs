@@ -2,6 +2,7 @@
 
 using SharePointAddInCore.Core.SharePointContext;
 using SharePointAddInCore.LowTrust;
+using SharePointAddInCore.LowTrust.Authentication;
 using SharePointAddInCore.LowTrust.AzureAccessControl;
 
 using System;
@@ -18,7 +19,7 @@ namespace SharePointAddInCore
         /// <returns>The <see cref="IServiceCollection"/> so that additional calls can be chained.</returns>
         public static IServiceCollection AddLowTrustAddIn(this IServiceCollection services, Action<LowTrustSharePointOptions> configure)
         {
-            services.AddCoreServices();
+            services.AddSharePointCoreServices();
 
             if (configure != null)
             {
@@ -27,6 +28,21 @@ namespace SharePointAddInCore
 
             services.AddHttpClient<IAcsClient, AcsClient>();
             services.AddScoped<ISharePointContext, LowTrustSharePointContext>();
+
+            return services;
+        }
+
+        /// <summary>
+        /// Adds Authentication services with a default <see cref="SharePointAuthentication.SchemeName" /> scheme.
+        /// </summary>
+        /// <param name="services">The <see cref="IServiceCollection"/> to add the services to.</param>
+        /// <param name="configureOptions">Optional authentication options configuration.</param>
+        /// <returns>The <see cref="IServiceCollection"/> so that additional calls can be chained.</returns>
+        public static IServiceCollection AddSharePointAuthentication(this IServiceCollection services, Action<SharePointAuthenticationOptions> configureOptions = null)
+        {
+            services
+                .AddAuthentication(SharePointAuthentication.SchemeName)
+                .AddSharePointAddIn(configureOptions);
 
             return services;
         }

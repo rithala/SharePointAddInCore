@@ -11,7 +11,7 @@ namespace SharePointAddInCore
     {
         public static IServiceCollection AddHighTrustAddIn(this IServiceCollection services, Action<HighTrustSharePointOptions> configure = null)
         {
-            services.AddCoreServices();
+            services.AddSharePointCoreServices();
 
             if (configure != null)
             {

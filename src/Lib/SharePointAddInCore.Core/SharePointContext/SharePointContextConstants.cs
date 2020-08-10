@@ -1,6 +1,6 @@
 ﻿namespace SharePointAddInCore.Core.SharePointContext
 {
-    internal static class SharePointContextConstants
+    public static class SharePointContextConstants
     {
         // URL Params
         public const string SPHostUrlKey = "SPHostUrl";

@@ -12,7 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Lib\SharePointAddInCore\SharePointAddInCore.csproj" />
+    <ProjectReference Include="..\..\Lib\SharePointAddInCore.LowTrust\SharePointAddInCore.LowTrust.csproj" />
   </ItemGroup>
 
 </Project>
