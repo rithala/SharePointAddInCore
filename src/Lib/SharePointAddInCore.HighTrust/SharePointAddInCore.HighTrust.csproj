@@ -2,6 +2,13 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <PackageTags>SharePoint, Office365, AddInModel, SharePointOnline, AppModel, HighTrust</PackageTags>
+    <Authors>Kamil Rithaler</Authors>
+    <Company>Kamil Rithaler</Company>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageProjectUrl>https://github.com/rithala/SharePointAddInCore</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/rithala/SharePointAddInCore</RepositoryUrl>
+    <Description>Create a high trust SharePoint (on-premises) Add-In using ASP.NET Core Web Application.</Description>
   </PropertyGroup>
 
   <ItemGroup>

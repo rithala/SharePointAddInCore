@@ -2,6 +2,13 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <Authors>Kamil Rithaler</Authors>
+    <Company />
+    <Description>Create a SharePoint Add-In using ASP.NET Core Web Application. This is the core of the library install SharePointAddInCore.HighTrust or SharePointAddInCore.LowTrust package instead.</Description>
+    <RepositoryUrl>https://github.com/rithala/SharePointAddInCore</RepositoryUrl>
+    <PackageTags>SharePoint, Office365, AddInModel, SharePointOnline, AppModel, HighTrust, LowTrust</PackageTags>
+    <PackageProjectUrl>https://github.com/rithala/SharePointAddInCore</PackageProjectUrl>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
   </PropertyGroup>
 
   <ItemGroup>

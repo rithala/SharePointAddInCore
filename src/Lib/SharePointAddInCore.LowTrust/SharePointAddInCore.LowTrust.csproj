@@ -2,6 +2,12 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <PackageTags>SharePoint, Office365, AddInModel, SharePointOnline, AppModel, LowTrust</PackageTags>
+    <Authors>Kamil Rithaler</Authors>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <RepositoryUrl>https://github.com/rithala/SharePointAddInCore</RepositoryUrl>
+    <PackageProjectUrl>https://github.com/rithala/SharePointAddInCore</PackageProjectUrl>
+    <Description>Create a low trust SharePoint (ACS) Add-In using ASP.NET Core Web Application.</Description>
   </PropertyGroup>
 
   <ItemGroup>
