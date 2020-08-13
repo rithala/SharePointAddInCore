@@ -23,13 +23,16 @@ namespace SharePointAddInCore.Core.SharePointClient
             using (var request = new HttpRequestMessage(HttpMethod.Get, new Uri(target, "_api/web/currentUser")))
             {
                 request.Headers.Add("Authorization", "Bearer " + accessToken);
-                request.Headers.Add("Accept", "application/json");
+                request.Headers.Add("Accept", "application/json;odata=verbose");
 
                 var response = await _httpClient.SendAsync(request);
                 response.EnsureSuccessStatusCode();
 
                 var jsonResponse = await response.Content.ReadAsStringAsync();
-                return JsonConvert.DeserializeObject<SharePointContextUser>(jsonResponse);
+
+                var odataResponse = JsonConvert.DeserializeObject<ODataResponse<SharePointContextUser>>(jsonResponse);
+
+                return odataResponse.Data;
             }
         }
 

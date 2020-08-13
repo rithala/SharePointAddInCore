@@ -60,7 +60,7 @@ namespace SharePointAddInCore.Core.SharePointContext
         {
             var props = GetSessionValueOrDefault<SharePointContextProps>(_cacheKey);
 
-            if (props == null)
+            if (props == null || props.SPHostUrl == null || props.SPAppWebUrl == null)
             {
                 return false;
             }
