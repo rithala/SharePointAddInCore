@@ -2,7 +2,7 @@
 
 namespace SharePointAddInCore.Core
 {
-    public static class SharePointAuthUtils
+    internal static class SharePointAuthUtils
     {
         public static string GetFormattedPrincipal(string principalName, string hostName, string realm)
         {

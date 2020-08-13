@@ -4,7 +4,7 @@ using SharePointAddInCore.Core.SharePointClient;
 
 namespace SharePointAddInCore
 {
-    public static class ServiceCollectionExtensions
+    internal static class ServiceCollectionExtensions
     {
         public static IServiceCollection AddSharePointCoreServices(this IServiceCollection services)
         {

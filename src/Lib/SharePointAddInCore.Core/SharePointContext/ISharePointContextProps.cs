@@ -2,6 +2,9 @@
 
 namespace SharePointAddInCore.Core.SharePointContext
 {
+    /// <summary>
+    /// Basic information about the SharePoint connection.
+    /// </summary>
     public interface ISharePointContextProps
     {
         Uri SPHostUrl { get; }

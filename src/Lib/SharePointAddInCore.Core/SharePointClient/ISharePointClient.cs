@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace SharePointAddInCore.Core.SharePointClient
 {
-    public interface ISharePointClient
+    internal interface ISharePointClient
     {
         Task<string> GetAuthenticationRealm(Uri target);
         Task<SharePointContextUser> GetSharePointContextUser(Uri target, string accessToken);

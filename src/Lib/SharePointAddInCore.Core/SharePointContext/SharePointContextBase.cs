@@ -4,12 +4,11 @@ using Microsoft.Extensions.Primitives;
 using Newtonsoft.Json;
 
 using System;
-using System.Net.Http;
 using System.Text;
 
 namespace SharePointAddInCore.Core.SharePointContext
 {
-    public abstract class SharePointContextBase : ISharePointContextProps
+    internal abstract class SharePointContextBase : ISharePointContextProps
     {
         private const string _cacheKey = "SPContextProps";
 

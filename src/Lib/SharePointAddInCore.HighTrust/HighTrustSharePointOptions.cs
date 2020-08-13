@@ -4,7 +4,7 @@ using SharePointAddInCore.Core;
 
 using System.Security.Cryptography.X509Certificates;
 
-namespace SharePointAddInCore.HighTrust
+namespace SharePointAddInCore
 {
     /// <summary>
     /// Options to configure the high trust SharePoint Add-in
@@ -14,14 +14,22 @@ namespace SharePointAddInCore.HighTrust
         private string _issuerId;
 
         /// <summary>
-        /// Issuer id
+        /// Issuer id. If not provided then ClientId will be used as an issuer id.
         /// </summary>
         public string IssuerId
         {
             get { return _issuerId ?? ClientId; }
             set { _issuerId = value; }
         }
+
+        /// <summary>
+        /// Path to the signing certificate
+        /// </summary>
         public string ClientSigningCertificatePath { get; set; }
+
+        /// <summary>
+        /// The certificate password
+        /// </summary>
         public string ClientSigningCertificatePassword { get; set; }
 
         internal X509Certificate2 ClientCertificate => (string.IsNullOrEmpty(ClientSigningCertificatePath) || string.IsNullOrEmpty(ClientSigningCertificatePassword))

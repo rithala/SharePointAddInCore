@@ -2,7 +2,7 @@
 
 namespace SharePointAddInCore.Core.SharePointClient.Models
 {
-    public class ODataResponse<T>
+    internal class ODataResponse<T>
     {
         [JsonProperty("d")]
         public T Data { get; }

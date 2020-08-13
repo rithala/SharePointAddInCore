@@ -9,10 +9,13 @@ using System;
 
 namespace SharePointAddInCore
 {
+    /// <summary>
+    /// Extension methods adding the library features to ASP.NET Core Apps.
+    /// </summary>
     public static class LowTrustExtensions
     {
         /// <summary>
-        /// Adds SharePoint low trust add-in (using OAuth ACS) services
+        /// Adds SharePoint low trust add-in (using OAuth ACS) services.
         /// </summary>
         /// <param name="services">The <see cref="IServiceCollection"/> to add the services to.</param>
         /// <param name="configure">The action used to configure the options.</param>
@@ -21,10 +24,7 @@ namespace SharePointAddInCore
         {
             services.AddSharePointCoreServices();
 
-            if (configure != null)
-            {
-                services.Configure(configure);
-            }
+            services.Configure(configure);
 
             services.AddHttpClient<IAcsClient, AcsClient>();
             services.AddScoped<ISharePointContext, LowTrustSharePointContext>();
