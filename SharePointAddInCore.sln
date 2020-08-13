@@ -5,11 +5,7 @@ VisualStudioVersion = 16.0.30225.117
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Example", "Example", "{22975BE7-0B96-45BE-BFB2-347CA6F962AF}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SharePointAddInCore.Example.Web", "src\Example\SharePointAddInCore.Example.Web\SharePointAddInCore.Example.Web.csproj", "{F0EFD08D-69E2-4309-872E-C2DE1ACAEAE8}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Lib", "Lib", "{CF7AB8A7-3B6C-4FAF-9C52-B2492BA1439E}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharePointAddInCore.Example", "src\Example\SharePointAddInCore.Example\SharePointAddInCore.Example.csproj", "{0786F40E-59C9-4029-92E4-8C4F65F21187}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SharePointAddInCore.LowTrust", "src\Lib\SharePointAddInCore.LowTrust\SharePointAddInCore.LowTrust.csproj", "{5A53BF00-4BF1-4640-A53C-AA2C19C4B7EF}"
 EndProject
@@ -21,7 +17,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "HighTrust", "HighTrust", "{
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharePointAddInCore.Example.HighTrust", "src\Example\HighTrust\SharePointAddInCore.Example.HighTrust\SharePointAddInCore.Example.HighTrust.csproj", "{CCC9E40D-75D0-4B27-978F-94423674FDB4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharePointAddInCore.Example.HighTrust.Web", "src\Example\HighTrust\SharePointAddInCore.Example.HighTrust.Web\SharePointAddInCore.Example.HighTrust.Web.csproj", "{FBBD2D25-C131-4FE3-A4EE-6AEDE4828181}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SharePointAddInCore.Example.HighTrust.Web", "src\Example\HighTrust\SharePointAddInCore.Example.HighTrust.Web\SharePointAddInCore.Example.HighTrust.Web.csproj", "{FBBD2D25-C131-4FE3-A4EE-6AEDE4828181}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "LowTrust", "LowTrust", "{365009BF-0D1E-4F87-9120-0ED66DEC6C43}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -29,16 +27,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{F0EFD08D-69E2-4309-872E-C2DE1ACAEAE8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F0EFD08D-69E2-4309-872E-C2DE1ACAEAE8}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F0EFD08D-69E2-4309-872E-C2DE1ACAEAE8}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F0EFD08D-69E2-4309-872E-C2DE1ACAEAE8}.Release|Any CPU.Build.0 = Release|Any CPU
-		{0786F40E-59C9-4029-92E4-8C4F65F21187}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{0786F40E-59C9-4029-92E4-8C4F65F21187}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{0786F40E-59C9-4029-92E4-8C4F65F21187}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
-		{0786F40E-59C9-4029-92E4-8C4F65F21187}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{0786F40E-59C9-4029-92E4-8C4F65F21187}.Release|Any CPU.Build.0 = Release|Any CPU
-		{0786F40E-59C9-4029-92E4-8C4F65F21187}.Release|Any CPU.Deploy.0 = Release|Any CPU
 		{5A53BF00-4BF1-4640-A53C-AA2C19C4B7EF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{5A53BF00-4BF1-4640-A53C-AA2C19C4B7EF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5A53BF00-4BF1-4640-A53C-AA2C19C4B7EF}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -66,14 +54,13 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{F0EFD08D-69E2-4309-872E-C2DE1ACAEAE8} = {22975BE7-0B96-45BE-BFB2-347CA6F962AF}
-		{0786F40E-59C9-4029-92E4-8C4F65F21187} = {22975BE7-0B96-45BE-BFB2-347CA6F962AF}
 		{5A53BF00-4BF1-4640-A53C-AA2C19C4B7EF} = {CF7AB8A7-3B6C-4FAF-9C52-B2492BA1439E}
 		{585E8690-25CB-4A74-9F76-229F66A938CB} = {CF7AB8A7-3B6C-4FAF-9C52-B2492BA1439E}
 		{D44F4628-C9F6-4F5B-9D6A-5496502F1A35} = {CF7AB8A7-3B6C-4FAF-9C52-B2492BA1439E}
 		{E64594E4-4D3F-4EDD-A728-BAB56AE27435} = {22975BE7-0B96-45BE-BFB2-347CA6F962AF}
 		{CCC9E40D-75D0-4B27-978F-94423674FDB4} = {E64594E4-4D3F-4EDD-A728-BAB56AE27435}
 		{FBBD2D25-C131-4FE3-A4EE-6AEDE4828181} = {E64594E4-4D3F-4EDD-A728-BAB56AE27435}
+		{365009BF-0D1E-4F87-9120-0ED66DEC6C43} = {22975BE7-0B96-45BE-BFB2-347CA6F962AF}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {EA9AF6FC-E7B7-4A47-87F3-B5E25846199D}
