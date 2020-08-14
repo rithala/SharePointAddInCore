@@ -28,7 +28,7 @@ namespace SharePointAddInCore.LowTrust
 
         private readonly LowTrustSharePointOptions _options;
         private readonly JwtSecurityTokenHandler _tokenHandler;
-        
+
         private readonly ISharePointClient _sharePointClient;
         private readonly IAcsClient _acsClient;
 
@@ -39,7 +39,7 @@ namespace SharePointAddInCore.LowTrust
             IOptions<LowTrustSharePointOptions> options) : base(httpContextAccessor)
         {
             _options = options.Value ?? throw new ArgumentNullException(nameof(LowTrustSharePointOptions));
-            
+
             _sharePointClient = sharePointClient;
             _acsClient = acsClient;
 
@@ -216,14 +216,14 @@ namespace SharePointAddInCore.LowTrust
             }
 
             _tokenHandler.ValidateToken(
-                spToken,
-                new TokenValidationParameters
-                {
-                    ValidateIssuer = false,
-                    ValidateAudience = false, // validated below
-                    IssuerSigningKeys = securityKeys // validate the signature
-                },
-                out var securityToken);
+               spToken,
+               new TokenValidationParameters
+               {
+                   ValidateIssuer = false,
+                   ValidateAudience = false, // validated below
+                   IssuerSigningKeys = securityKeys // validate the signature
+               },
+               out var securityToken);
 
             return new SharePointContextToken(securityToken);
         }
